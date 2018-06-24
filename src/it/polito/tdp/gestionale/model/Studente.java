@@ -3,13 +3,15 @@ package it.polito.tdp.gestionale.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Studente {
+public class Studente extends Nodo{
 
 	private List<Corso> corsi;
 	private int matricola;
 	private String cognome;
 	private String nome;
 	private String cds;
+	
+	private int numCorsi=0;
 
 	public Studente(int matricola) {
 		this.matricola = matricola;
@@ -73,4 +75,21 @@ public class Studente {
 	public void setCorsi(List<Corso> corsi) {
 		this.corsi = corsi;
 	}
+
+	@Override
+	public String toString() {
+		return "Studente [matricola=" + matricola + ", nome=" + nome + "]";
+	}
+
+	public void aggiungiCorso() {
+		numCorsi++;
+		
+	}
+
+	public int getNumCorsi() {
+		return numCorsi;
+	}
+
+	
+	
 }

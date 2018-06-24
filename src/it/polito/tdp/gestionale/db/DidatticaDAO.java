@@ -17,7 +17,7 @@ public class DidatticaDAO {
 	/*
 	 * Ottengo tutti gli studenti iscritti al Corso
 	 */
-	public void getStudentiIscrittiAlCorso(Corso corso, Map<Integer, Studente> mapStudenti) {
+	public List<Studente> getStudentiIscrittiAlCorso(Corso corso, Map<Integer, Studente> mapStudenti) {
 		final String sql = "SELECT studente.matricola FROM iscrizione, studente WHERE iscrizione.matricola=studente.matricola AND codins=?";
 
 		List<Studente> studentiIscrittiAlCorso = new ArrayList<Studente>();
@@ -40,6 +40,7 @@ public class DidatticaDAO {
 			}
 
 			corso.setStudenti(studentiIscrittiAlCorso);
+			return studentiIscrittiAlCorso;
 
 		} catch (SQLException e) {
 			// e.printStackTrace();
@@ -98,6 +99,30 @@ public class DidatticaDAO {
 			}
 
 			return studenti;
+
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new RuntimeException("Errore Db");
+		}
+	}
+
+	public int getFrequentanti() {
+		final String sql = "select distinct matricola " + 
+				"from iscrizione ";
+
+		int cont=0;
+
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+				cont++;
+			}
+
+			return cont;
 
 		} catch (SQLException e) {
 			// e.printStackTrace();

@@ -1,9 +1,12 @@
 package it.polito.tdp.gestionale;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.gestionale.model.Corso;
 import it.polito.tdp.gestionale.model.Model;
+import it.polito.tdp.gestionale.model.Studente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -25,16 +28,33 @@ public class DidatticaGestionaleController {
 	@FXML
 	private TextArea txtResult;
 
-	@FXML
-	void doCorsiFrequentati(ActionEvent event) {
-		txtResult.clear();
-		txtResult.setText("premuto Corsi Frequentati");
+
+	public void setModel(Model model) {
+		this.model = model;
+		model.creagrafo();
 	}
 	
 	@FXML
-	void doVisualizzaCorsi(ActionEvent event) {
+	void doCorsiFrequentati(ActionEvent event) {
+		
+		//quanti studenti sono iscritti ad un solo corso, quanti due, quanti tre, ecc.
 		txtResult.clear();
-		txtResult.setText("premuto Visualizza Corsi");
+		txtResult.setText("Numero di corsi frequentati per studente: ");
+		
+		for(Studente s: model.getStudenti()) {
+			txtResult.appendText(String.format("\nStudente " +s.getMatricola()+" frequenta "+s.getNumCorsi()+" corsi"));
+		}
+	}
+	
+	@FXML
+	void doVisualizzaCorsi(ActionEvent event) {		
+		txtResult.clear();
+		
+		List<Corso> corsi = model.invitaCorsi();
+		txtResult.setText("\nCorsi da invitare alla conferenza: ");
+		for(Corso c: corsi) {
+			txtResult.appendText("\n"+c.toString());
+		}
 	}
 
 	@FXML
@@ -44,8 +64,5 @@ public class DidatticaGestionaleController {
 
 	}
 
-	public void setModel(Model model) {
-		this.model = model;
-	}
 
 }

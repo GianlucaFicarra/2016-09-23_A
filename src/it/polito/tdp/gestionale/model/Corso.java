@@ -3,7 +3,7 @@ package it.polito.tdp.gestionale.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Corso {
+public class Corso  extends Nodo implements Comparable<Corso>{
 
 	private List<Studente> studenti;
 	private String codins;
@@ -75,4 +75,20 @@ public class Corso {
 	public void setStudenti(List<Studente> studenti) {
 		this.studenti = studenti;
 	}
+
+	@Override //ordine crescente di codici
+	public int compareTo(Corso c) {
+		return this.codins.compareTo(c.getCodins());
+	}
+
+	@Override
+	public String toString() {
+		return "Corso [codins=" + codins + ", nome=" + nome + "]";
+	}
+
+	public void addStudenti(List<Studente> studentiIscrittiAlCorso) {
+		studenti.addAll(studentiIscrittiAlCorso);
+	}
+	
+	
 }
